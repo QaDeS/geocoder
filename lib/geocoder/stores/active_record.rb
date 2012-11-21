@@ -116,7 +116,7 @@ module Geocoder::Store
           conditions = [bounding_box_conditions + " AND #{distance} <= ?", radius]
         end
         {
-          :select => select_clause(options[:select], distance, bearing),
+          :select => select_clause(options[:select], options[:select_also], distance, bearing),
           :conditions => add_exclude_condition(conditions, options[:exclude]),
           :order => options.include?(:order) ? options[:order] : "distance ASC"
         }
@@ -160,7 +160,7 @@ module Geocoder::Store
       ##
       # Generate the SELECT clause.
       #
-      def select_clause(columns, distance = nil, bearing = nil)
+      def select_clause(columns, add_columns, distance = nil, bearing = nil)
         if columns == :id_only
           return full_column_name(primary_key)
         elsif columns == :geo_only
@@ -169,7 +169,8 @@ module Geocoder::Store
           clause = (columns || full_column_name("*")) + ", "
         end
         clause + "#{distance} AS distance" +
-          (bearing ? ", #{bearing} AS bearing" : "")
+          (bearing ? ", #{bearing} AS bearing" : "") +
+          (add_columns ? ", #{add_columns}" : "")
       end
 
       ##
