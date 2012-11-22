@@ -28,6 +28,7 @@ module Geocoder
         :geocoder_ca,
         :yandex,
         :nominatim,
+        :open_mapquest,
         :mapquest,
         :test
       ]

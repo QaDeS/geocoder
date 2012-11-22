@@ -34,7 +34,11 @@ module Geocoder::Lookup
 
     def query_url(query)
       method = query.reverse_geocode? ? "reverse" : "search"
-      "#{protocol}://nominatim.openstreetmap.org/#{method}?" + url_query_string(query)
+      "#{api_url}/#{method}?" + url_query_string(query)
+    end
+    
+    def api_url
+      "#{protocol}://nominatim.openstreetmap.org"
     end
   end
 end
