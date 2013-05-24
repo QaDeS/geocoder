@@ -118,7 +118,7 @@ module Geocoder::Store
         {
           :select => select_clause(options[:select], options[:select_also], distance, bearing),
           :conditions => add_exclude_condition(conditions, options[:exclude]),
-          :order => options.include?(:order) ? options[:order] : "distance ASC"
+          :order => options.include?(:order) ? options[:order] : "_distance ASC"
         }
       end
 
@@ -168,7 +168,7 @@ module Geocoder::Store
         else
           clause = (columns || full_column_name("*")) + ", "
         end
-        clause + "#{distance} AS distance" +
+        clause + "#{distance} AS _distance" +
           (bearing ? ", #{bearing} AS bearing" : "") +
           (add_columns ? ", #{add_columns}" : "")
       end
